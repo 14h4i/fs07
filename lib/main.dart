@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fs07/modules/authentication/pages/login_page.dart';
+import 'package:fs07/modules/firebase/widgets/firebase_initializer.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const FirebaseInitializer(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,6 +21,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      initialRoute: LoginPage.route,
+      routes: {
+        LoginPage.route: (context) => const LoginPage(),
+      },
     );
   }
 }
