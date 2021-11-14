@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatelessWidget {
-  static const route = '/login';
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -14,23 +13,28 @@ class LoginPage extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          child: const Text('Sign in with Google'),
           onPressed: () => _signInWithGoogle(),
+          child: const Text('Sign in with Google'),
         ),
       ),
     );
   }
 
   Future<UserCredential> _signInWithGoogle() async {
+    // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
 
+    // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
 
+    // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }
