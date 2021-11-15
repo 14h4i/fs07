@@ -16,12 +16,6 @@ class _DashboardPageState extends State<DashboardPage> {
   AppBloc? get appStateBloc => BlocProvider.of<AppBloc>(context);
 
   @override
-  void initState() {
-    super.initState();
-    _postsBloc!.add('getPosts');
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

@@ -11,7 +11,7 @@ class Routes {
         return _buildRoute(
           settings,
           BlocProvider(
-            create: (_) => ListPostsBloc(),
+            create: (_) => ListPostsBloc()..add('getPosts'),
             child: const DashboardPage(),
           ),
         );
