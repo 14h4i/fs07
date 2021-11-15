@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fs07/modules/authentication/pages/welcome_page.dart';
 import 'package:fs07/modules/dashboard/pages/dashboard_page.dart';
-import 'package:fs07/providers/bloc_provider.dart';
+import 'package:fs07/modules/posts/blocs/list_posts_bloc.dart';
 
 class Routes {
   static Route authorizedRoute(RouteSettings settings) {
@@ -10,11 +11,10 @@ class Routes {
         return _buildRoute(
           settings,
           BlocProvider(
-            bloc: ListPostsRxDartBloc()..getPosts(),
+            create: (_) => ListPostsBloc(),
             child: const DashboardPage(),
           ),
         );
-        return _errorRoute();
       default:
         return _errorRoute();
     }

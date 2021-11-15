@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:fs07/config_env.dart';
+import 'package:fs07/providers/config_env.dart';
+import 'package:fs07/providers/error_response.dart';
 import 'package:fs07/providers/log_provider.dart';
 import 'package:fs07/resource/token_manager.dart';
-import 'package:fs07/src/day04/error_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Must be top-level function

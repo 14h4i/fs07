@@ -1,36 +1,39 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fs07/modules/authentication/enum/login_state.dart';
 import 'package:fs07/modules/authentication/wrapper/models/login_data.dart';
 import 'package:fs07/modules/authentication/wrapper/service/auth_service.dart';
-import 'package:fs07/providers/bloc_provider.dart';
 
-class AuthenticationBloc extends Bloc<AuthenticationEvent, LoginState> {
+part 'authentication_event.dart';
+part 'authentication_state.dart';
+
+class AuthenticationBloc
+    extends Bloc<AuthenticationEvent, AuthenticationState> {
+  AuthenticationBloc(this.auth) : super(const AuthenticationState()) {
+    on<SignIn>(_signIn);
+    on<LoginWithGmail>(_loginWithGmail);
+  }
+
   final AuthService auth;
 
-  AuthenticationBloc(this.auth);
+  // AuthenticationBloc(this.auth);
 
-  Future<LoginStatus> _signIn(Future<LoginData?> signInMethod) async {
+  // Future<LoginStatus> _signIn(Future<LoginData?> signInMethod) async {
+  Future<void> _signIn(SignIn event, Emitter<AuthenticationState> emit) async {
     try {
-      final loginData = await signInMethod;
+      final loginData = await event.signInMethod;
       if (loginData != null) {
         // return loginData.isNew ? LoginState.newUser : LoginState.success;
-        return LoginStatus.success;
+        emit(state.copyWith(status: AuthenticationStatus.success));
+      } else {
+        emit(state.copyWith(status: AuthenticationStatus.fail));
       }
-      return LoginStatus.fail;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<LoginStatus> loginWithGmail() async {
-    return _signIn(auth.loginWithGmail());
+  Future<void> _loginWithGmail(
+      LoginWithGmail event, Emitter<AuthenticationState> emit) async {
+    // return _signIn(auth.loginWithGmail());
   }
-
-  @override
-  void dispose() {}
 }
-
-//Event
-abstract class AuthenticationEvent {}
-
-class SignIn extends AuthenticationEvent {}

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fs07/blocs/app_state_bloc.dart';
+import 'package:fs07/blocs/app/app_bloc.dart';
+import 'package:fs07/modules/authentication/blocs/authentication_bloc.dart';
+import 'package:fs07/modules/authentication/wrapper/service/app_auth_service.dart';
+import 'package:fs07/route/routes.dart';
 
 class MyApp extends StatefulWidget {
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -24,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => appStateBloc,
+      create: (context) => appStateBloc,
       child: BlocBuilder<AppBloc, AppState>(
           // stream: appStateBloc.appState,
           // initialData: appStateBloc.initState,
@@ -40,7 +44,7 @@ class _MyAppState extends State<MyApp> {
             }
             if (state.status == AppStatus.unAuthorized) {
               return BlocProvider(
-                bloc: _authenticationBloc,
+                create: (context) => _authenticationBloc,
                 child: MaterialApp(
                   key: const ValueKey('UnAuthorized'),
                   themeMode: ThemeMode.light,

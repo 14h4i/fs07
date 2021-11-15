@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fs07/blocs/app_state_bloc.dart';
-import 'package:fs07/providers/bloc_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fs07/blocs/app/app_bloc.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -25,6 +25,6 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   void _changeAppState() {
-    appStateBloc!.changeAppState(AppStatus.authorized);
+    appStateBloc!.add(ChangeAppState(status: AppStatus.authorized));
   }
 }
