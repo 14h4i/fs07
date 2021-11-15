@@ -9,7 +9,7 @@ class ListPostsService {
   Future<List<Post>?> getPosts() async {
     try {
       final res = await Dio(BaseOptions(
-              baseUrl: 'https://api.dofhunt1.200lab.io', connectTimeout: 3000))
+              baseUrl: 'https://api.dofhunt.200lab.io', connectTimeout: 3000))
           .get(
         "/v1/posts",
         queryParameters: {'tags': "portrait"},
